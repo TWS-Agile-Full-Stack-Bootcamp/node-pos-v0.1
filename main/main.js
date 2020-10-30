@@ -1,6 +1,7 @@
 module.exports = function main(inputs) {
+  const byBarcode = ref => _ => _.Barcode === ref.Barcode
   const consolidate = _ => _.reduce((acc, cur) => {
-    const found = acc.find(_ => _.Barcode === cur.Barcode)
+    const found = acc.find(byBarcode(cur))
     if (found) found.count++
     else acc.push({...cur, count: 1})
     return acc
