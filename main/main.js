@@ -7,10 +7,11 @@ module.exports = function main(inputs) {
     return acc
   }, [])
 
+  const subtotal = _ => _.Price * _.count
   const renderFloat = _ => _.toFixed(2)
-  const renderItem = _ => `Name: ${_.Name}, Quantity: ${_.count} ${_.Unit+(_.count>1?'s':'')}, Unit price: ${renderFloat(_.Price)} (yuan), Subtotal: ${renderFloat(_.Price * _.count)} (yuan)`
+  const renderItem = _ => `Name: ${_.Name}, Quantity: ${_.count} ${_.Unit+(_.count>1?'s':'')}, Unit price: ${renderFloat(_.Price)} (yuan), Subtotal: ${renderFloat(subtotal(_))} (yuan)`
   const renderItems = items => items.map(renderItem).join('\n')
-  const total = items => items.map(_ => _.Price * _.count).reduce((a, b)=>a+b, 0)
+  const total = items => items.map(subtotal).reduce((a, b)=>a+b, 0)
   const renderReceipt = items => '***<store earning no money>Receipt ***\n' +
       renderItems(items) +
       '\n----------------------\n' +
